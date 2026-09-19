@@ -367,6 +367,46 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
+        /* ==========================================
+           FAQ SECTION (NEW)
+           ========================================== */
+        .faq-item {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .faq-item:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
+            box-shadow: -5px 5px 15px rgba(0,0,0,0.3);
+        }
+        .faq-item h4 {
+            color: var(--accent);
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .faq-item h4::before {
+            content: "Q:";
+            color: var(--text-main);
+            font-weight: 800;
+        }
+        .faq-item p {
+            color: var(--text-muted);
+            margin: 0;
+            padding-left: 32px;
+            line-height: 1.7;
+        }
+        .faq-item p strong {
+            color: var(--text-main);
+        }
+
     </style>
 </head>
 <body>
@@ -382,6 +422,7 @@
             <a href="#features">Features</a>
             <a href="#setup">Installation & Connection</a>
             <a href="#walkthrough">Walkthrough</a>
+            <a href="#faq">FAQ</a>
         </div>
     </nav>
 
@@ -546,7 +587,7 @@
             <img src="ضع_لينك_الصورة_هنا" alt="Connection Setup Screen" class="success-img">
         </div>
 
-        <!-- Walkthrough: Position & Charts (Split into 4 parts) -->
+        <!-- Walkthrough: Position & Charts -->
         <div class="setup-step">
             <span class="step-label">Positioning & Navigation</span>
             <h3>Dynamic Control & World Exploration</h3>
@@ -572,7 +613,7 @@
             <img src="ضع_لينك_الصورة_هنا" alt="World Tour Screen" class="success-img">
         </div>
 
-        <!-- Walkthrough: Interactive Map & Global Radar (NEW) -->
+        <!-- Walkthrough: Interactive Map & Global Radar -->
         <div class="setup-step">
             <span class="step-label">Navigation & Radar</span>
             <h3>Interactive Map & Live Teleportation</h3>
@@ -618,7 +659,37 @@
             <p>Take complete command of ground operations without ever touching your PC. Connect the tug and use intuitive one-touch controls to push back straight, or precisely turn the tail left or right to align with the taxiway.</p>
             <img src="ضع_لينك_الصورة_هنا" alt="Pushback Control Screen" class="success-img">
         </div>
+    </section>
 
+    <!-- FAQ SECTION (NEW) -->
+    <section id="faq" class="setup-section">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="setup-subtitle">Quick answers to the most common questions about Simulator Station.</p>
+
+        <div class="faq-item">
+            <h4>Why is the app showing "Disconnected" and refusing to connect?</h4>
+            <p>Ensure that the Bridge server is actively running on your PC and that your mobile device and PC are on the exact same Wi-Fi network. Check that your Windows Firewall isn't blocking the connection. <strong>Crucial Step:</strong> Verify that you entered the correct PC IP Address in the app (local IPs can change upon router restarts) and ensure you are running the latest version of the Bridge.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>Does the app support the new MSFS 2024?</h4>
+            <p>Yes, absolutely! Simulator Station is built and optimized to fully support both MSFS 2020 and the newly released MSFS 2024 with maximum efficiency.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>Why isn't my flight plan loading from SimBrief?</h4>
+            <p>Ensure you have entered your correct SimBrief ID on the app's Connection page. Most importantly, you must click "Generate Flight" on the SimBrief website for your current flight before opening the Flight Plan tab in the app.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>Does the map display live VATSIM and IVAO traffic?</h4>
+            <p>Yes! Once you enter your VATSIM or IVAO ID on the Connection page, you can instantly view live network traffic. You can seamlessly toggle the traffic display on or off directly from the map's left-hand filter menu.</p>
+        </div>
+
+        <div class="faq-item">
+            <h4>Can I use the Teleport feature while mid-air?</h4>
+            <p>Yes, mid-air teleportation is fully supported. However, always ensure you configure an appropriate target Altitude and target Airspeed in the Teleport settings before executing the jump to prevent your aircraft from stalling upon arrival.</p>
+        </div>
     </section>
 
 </body>
