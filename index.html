@@ -29,6 +29,7 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
         
         * {
@@ -126,6 +127,7 @@
             font-size: 1rem;
             transition: all 0.3s ease;
             cursor: pointer;
+            display: inline-block;
         }
         .btn-primary {
             background-color: var(--accent);
@@ -233,7 +235,6 @@
             font-size: 1rem;
         }
         
-        /* Sub-bullets for specific items */
         .card ul li ul {
             margin-top: 10px;
             padding-left: 10px;
@@ -250,6 +251,122 @@
             color: var(--text-main);
         }
 
+        /* ==========================================
+           SETUP GUIDE SECTION (NEW)
+           ========================================== */
+        .setup-section {
+            padding: 40px 20px 80px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .setup-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        .setup-alert {
+            background-color: var(--bg-card);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .setup-alert h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+        .setup-alert ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-muted);
+        }
+        .setup-alert ul li {
+            margin-bottom: 8px;
+        }
+        .setup-step {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 30px;
+        }
+        .step-label {
+            display: inline-block;
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .setup-step h3 {
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .setup-step p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        .code-box {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: monospace;
+            color: var(--text-muted);
+            margin-top: 15px;
+        }
+        .code-box strong {
+            color: var(--accent);
+            font-size: 1.1rem;
+            display: block;
+            margin-top: 5px;
+        }
+        .custom-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .custom-list li {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            color: var(--text-muted);
+        }
+        .custom-list li strong {
+            color: var(--text-main);
+            margin-right: 15px;
+            min-width: 250px;
+        }
+        .important-note {
+            background-color: rgba(99, 157, 240, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(99, 157, 240, 0.2);
+            color: var(--text-muted);
+            margin-top: 25px;
+        }
+        .important-note strong {
+            color: var(--text-main);
+        }
+        .success-img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
     </style>
 </head>
 <body>
@@ -263,7 +380,7 @@
         <div class="nav-links">
             <a href="#" class="active">MSFS Home</a>
             <a href="#features">Features</a>
-            <a href="#">Setup Guide</a>
+            <a href="#setup">Setup Guide</a>
         </div>
     </nav>
 
@@ -275,7 +392,7 @@
         
         <div class="hero-actions">
             <a href="#features" class="btn btn-primary">Explore Features</a>
-            <a href="#" class="btn btn-secondary">Installation Guide (Next)</a>
+            <a href="#setup" class="btn btn-secondary">Installation Guide (Next)</a>
         </div>
 
         <div class="app-showcase">
@@ -283,13 +400,12 @@
         </div>
     </header>
 
-    <!-- FEATURES GRID (Pasted Exactly as Requested) -->
+    <!-- FEATURES GRID -->
     <section id="features" class="features-section">
         <h2 class="section-title">Everything You Need. All In One Place.</h2>
         
         <div class="grid">
             
-            <!-- Card 1 -->
             <div class="card">
                 <h3>📍 Precision Aircraft Repositioning & World Tour</h3>
                 <ul>
@@ -300,7 +416,6 @@
                 </ul>
             </div>
 
-            <!-- Card 2 -->
             <div class="card">
                 <h3>🌍 Next-Gen Interactive Map & Radar</h3>
                 <ul>
@@ -317,7 +432,6 @@
                 </ul>
             </div>
 
-            <!-- Card 3 -->
             <div class="card">
                 <h3>🌤️ Immersive Aviation Weather Visualizations</h3>
                 <ul>
@@ -326,7 +440,6 @@
                 </ul>
             </div>
 
-            <!-- Card 4 -->
             <div class="card">
                 <h3>👨‍✈️ Virtual Crew & Performance Operations</h3>
                 <ul>
@@ -336,7 +449,6 @@
                 </ul>
             </div>
 
-            <!-- Card 5 -->
             <div class="card">
                 <h3>✈️ Total Aircraft & Ground Control</h3>
                 <ul>
@@ -346,7 +458,6 @@
                 </ul>
             </div>
 
-            <!-- Card 6 -->
             <div class="card">
                 <h3>📱 Smart Electronic Flight Bag (EFB) & AI Integration</h3>
                 <ul>
@@ -358,6 +469,67 @@
             </div>
 
         </div>
+    </section>
+
+    <!-- SETUP GUIDE SECTION (NEW) -->
+    <section id="setup" class="setup-section">
+        <h2 class="section-title">MSFS Connection Guide</h2>
+        <p class="setup-subtitle">A clean, step-by-step guide to connecting the SimulatorStation mobile app with Microsoft Flight Simulator on your PC.</p>
+
+        <!-- Before you begin -->
+        <div class="setup-alert">
+            <h3>Before you begin</h3>
+            <ul>
+                <li>Have Microsoft Flight Simulator running on your PC.</li>
+                <li>Keep your mobile device and PC on the same Wi-Fi network.</li>
+                <li>If you use SimBrief, IVAO, or VATSIM, have your relevant ID ready.</li>
+            </ul>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="setup-step">
+            <span class="step-label">Step 1</span>
+            <h3>Download the Bridge File</h3>
+            <p>Download the SimulatorStation Bridge ZIP file to your Windows PC. Extract the downloaded ZIP folder before continuing.</p>
+            
+            <a href="https://www.google.com/url?sa=D&q=https://drive.google.com/uc%3Fexport%3Ddownload%26id%3D1TU-IHfJPU5va272GTa0hLoMig_TDUeNf&ust=1789935360000000&usg=AOvVaw281ZqI52fKqaHgDP6tmxwu&hl=ar" target="_blank" class="btn btn-primary" style="margin: 15px 0;">DOWNLOAD BRIDGE FILE</a>
+            
+            <p>After downloading: Open the ZIP file &rarr; extract it to a convenient location on your PC &rarr; open the extracted folder.</p>
+            
+            <div class="code-box">
+                The file you need to run is:
+                <strong>SimulatorStation_Bridge.v1.exe</strong>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="setup-step">
+            <span class="step-label">Step 2</span>
+            <h3>Run the Bridge Server</h3>
+            <p>Open the extracted folder and double-click <strong>SimulatorStation_Bridge.v1.exe</strong> to start the bridge server.</p>
+            
+            <ul class="custom-list">
+                <li><strong>01 Open the extracted folder</strong> Locate the Bridge server files.</li>
+                <li><strong>02 Run SimulatorStation_Bridge.v1.exe</strong> Double-click the executable.</li>
+                <li><strong>03 Keep the black command window open</strong> Leave it running in the background while you fly.</li>
+            </ul>
+
+            <div class="important-note">
+                <strong>Important:</strong> The bridge server must remain open in the background to maintain communication between MSFS and the mobile app.
+                <br><br>
+                Next, make sure your phone/tablet and the PC are connected to the same Wi-Fi network.
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="setup-step">
+            <span class="step-label">Step 3</span>
+            <h3>Connect & Verify</h3>
+            <p>Open the Simulator Station app on your device. Once the app detects the bridge server running on your PC, the red "Disconnected" banner at the top of the screen will automatically turn green and display "Connected".</p>
+            
+            <img src="https://raw.githubusercontent.com/osamanabel1999/App-assets/refs/heads/main/46AB4E4F-D38B-435F-9730-D3C5EFCB39BD.png" alt="Connected Success Banner" class="success-img">
+        </div>
+
     </section>
 
 </body>
