@@ -8,15 +8,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         /* ==========================================
-           COLOR PALETTE & VARIABLES (As Requested)
+           COLOR PALETTE & VARIABLES
            ========================================== */
         :root {
-            --bg-main: #0B111A;      /* خلفية الموقع */
-            --bg-card: #101923;      /* الكروت */
-            --border-color: #26364D; /* الحواف */
-            --text-muted: #8B949E;   /* النصوص الإرشادية والوصف */
-            --accent: #639DF0;       /* الأيقونات، الأزرار، العناوين */
-            --text-main: #FFFFFF;    /* النصوص الأساسية */
+            --bg-main: #0B111A;      
+            --bg-card: #101923;      
+            --border-color: #26364D; 
+            --text-muted: #8B949E;   
+            --accent: #639DF0;       
+            --text-main: #FFFFFF;    
+        }
+
+        /* ==========================================
+           HIDE SCROLLBARS FOR NATIVE APP LOOK
+           ========================================== */
+        ::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        html {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
 
         /* ==========================================
@@ -30,6 +41,7 @@
             padding: 0;
             line-height: 1.6;
             scroll-behavior: smooth;
+            overflow-x: hidden; 
         }
         
         * {
@@ -368,7 +380,7 @@
         }
 
         /* ==========================================
-           FAQ SECTION (NEW)
+           FAQ SECTION
            ========================================== */
         .faq-item {
             background-color: var(--bg-card);
@@ -407,6 +419,41 @@
             color: var(--text-main);
         }
 
+        /* ==========================================
+           MOBILE RESPONSIVENESS
+           ========================================== */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px 20px;
+                gap: 15px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .hero {
+                padding: 40px 15px 20px;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero-actions {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+            .custom-list li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .custom-list li strong {
+                min-width: auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -592,22 +639,18 @@
             <span class="step-label">Positioning & Navigation</span>
             <h3>Dynamic Control & World Exploration</h3>
             
-            <!-- 1. Approach Setup -->
             <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">1. Dynamic Approach Setup</strong>
             Type any airport ICAO code to instantly load its operational data. From the <strong>Runway</strong> tab, you can select your active runway, dial in your target airspeed, and click on any visual approach pattern (like Left Base, Right Downwind, or a 15nm final). Your aircraft will instantly teleport and align perfectly.</p>
             <img src="ضع_لينك_الصورة_هنا" alt="Position Screen" class="success-img" style="margin-bottom: 30px;">
 
-            <!-- 2. Airport Charts -->
             <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">2. Interactive Airport Charts</strong>
             Switch over to the <strong>Airport Chart</strong> tab to view a meticulously detailed, fully drawn layout of the airport, displaying all runways and taxiways. Spot an aircraft icon at a specific gate? Simply tap it, and your plane will instantly spawn perfectly parked at that exact gate.</p>
             <img src="ضع_لينك_الصورة_هنا" alt="Airport Chart Screen" class="success-img" style="margin-bottom: 30px;">
 
-            <!-- 3. Navaids Teleport -->
             <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">3. Advanced Navaids Teleport</strong>
             Search for any navigational aid (VOR or NDB) worldwide to instantly pull up its frequency, elevation, and precise coordinates. Dial in your desired radial, heading, distance, altitude, and speed, then click <strong>Teleport</strong>. Your aircraft will instantly spawn at the exact pinpointed location in the sky, fully configured and ready to fly.</p>
             <img src="ضع_لينك_الصورة_هنا" alt="Navaids Teleport Screen" class="success-img" style="margin-bottom: 30px;">
 
-            <!-- 4. World Tour -->
             <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">4. Scenic World Tour</strong>
             Explore over 30 of the world's most iconic and breathtaking landmarks. Simply set your desired target speed, select a destination like the Great Pyramids or the Eiffel Tower, and click <strong>FLY HERE</strong>. The app instantly teleports your aircraft to enjoy stunning scenic views without the hassle of planning a full route.</p>
             <img src="ضع_لينك_الصورة_هنا" alt="World Tour Screen" class="success-img">
@@ -618,27 +661,22 @@
             <span class="step-label">Navigation & Radar</span>
             <h3>Interactive Map & Live Teleportation</h3>
 
-            <!-- 1. Search & Left Filters -->
             <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">1. Universal Search & Smart Filters</strong>
             Use the top search bar to instantly locate any ICAO, Callsign, Navaid, or active flight. The comprehensive left menu allows you to toggle live VATSIM/IVAO traffic, Airports, Waypoints, Airways, Holds, and your exact Flight Path on or off to perfectly declutter your view.</p>
             <img src="ضع_لينك_الصورة_هنا" alt="Map Search and Filters" class="success-img" style="margin-bottom: 30px;">
 
-            <!-- 2. Weather & Layers -->
             <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">2. Dynamic Weather & Map Layers</strong>
             Click the layer icon on the right to completely transform your map environment. Switch between Dark and Satellite views, and instantly overlay real-time aviation weather data including Precipitation, Rain, Temp, Wind, Airway Segments, and stunning Aurora visuals.</p>
             <img src="ضع_لينك_الصورة_هنا" alt="Map Weather Layers" class="success-img" style="margin-bottom: 30px;">
 
-            <!-- 3. Map Teleport -->
             <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">3. Instant Map Teleportation</strong>
             Want to practice a specific scenario? Click <strong>Teleport</strong> from the left menu, tap absolutely anywhere on the map, enter your desired Altitude, Speed, and Heading, and hit <strong>Send Teleport</strong>. Your aircraft will seamlessly spawn at those exact coordinates in a fraction of a second.</p>
             <img src="ضع_لينك_الصورة_هنا" alt="Map Teleportation Settings" class="success-img" style="margin-bottom: 30px;">
 
-            <!-- 4. Interactive Navaids -->
             <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">4. Interactive Navaids</strong>
             Tap any VOR or NDB on the map to pull up its exact frequency, elevation, power range, and coordinates. With a single click on <strong>Teleport To Navaid</strong>, you can instantly position your aircraft directly over the station.</p>
             <img src="ضع_لينك_الصورة_هنا" alt="Interactive Navaids on Map" class="success-img" style="margin-bottom: 30px;">
 
-            <!-- 5. Airport Database -->
             <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">5. Ultimate Airport Database</strong>
             Click any airport icon on the map to unlock a massive database. Instantly access real-world ATC frequencies, highly detailed runway specs (length, width, surface type, lighting, bearing), plus live METAR, TAF, and ATIS (text and voice) for complete situational awareness.</p>
             <img src="ضع_لينك_الصورة_هنا" alt="Airport Database and Runways" class="success-img">
@@ -659,9 +697,68 @@
             <p>Take complete command of ground operations without ever touching your PC. Connect the tug and use intuitive one-touch controls to push back straight, or precisely turn the tail left or right to align with the taxiway.</p>
             <img src="ضع_لينك_الصورة_هنا" alt="Pushback Control Screen" class="success-img">
         </div>
+
+        <!-- Walkthrough: Performance Calculation -->
+        <div class="setup-step">
+            <span class="step-label">Flight Operations</span>
+            <h3>Precision Performance Calculator (T/O & LDG)</h3>
+            <p>Simulator Station features a highly accurate, airline-grade performance calculator that meticulously computes your Take-Off and Landing data based on real-world physics and conditions.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">1. Take-Off Data Entry</strong>
+            Input your specific aircraft type, gross weight, configuration, anti-ice status, and exact runway conditions (length, slope, heading, elevation). Add precise meteorological data including QNH, exact temperature, and wind direction/speed to ensure maximum realism and safety before departure.</p>
+            <img src="ضع_لينك_الصورة_هنا" alt="Take-Off Data Entry Screen" class="success-img" style="margin-bottom: 30px;">
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">2. Landing Data Entry (LDA)</strong>
+            Prepare for a safe arrival by setting your landing weight, Autobrake settings, and reverser operational status. Combine this with the destination airport's elevation, runway condition, and live weather to dynamically calculate your required stopping margins.</p>
+            <img src="ضع_لينك_الصورة_هنا" alt="Landing Data Entry Screen" class="success-img" style="margin-bottom: 30px;">
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">3. Highly Accurate T/O Results & V-Speeds</strong>
+            Hit calculate to generate impeccably precise V-speeds (V1, VR, V2) and Flex Temperatures. The app also determines your precise flap and slat retraction speeds (F, S, Green Dot). Best of all, the intuitive visual runway diagram displays exactly where on the runway your aircraft will hit these critical speeds relative to the total runway length (TORA).</p>
+            <img src="ضع_لينك_الصورة_هنا" alt="Take-Off Results Screen" class="success-img" style="margin-bottom: 30px;">
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">4. Precise Landing Distances & Overrun Warnings</strong>
+            Review your precise Approach Speed (VAPP) and Minimum Selectable Speed (VLS). The calculator actively compares your <i>Actual Distance</i> against the <i>Factored Distance</i> to tell you exactly how much runway will remain. If the runway is too short for your weight and weather conditions, a dynamic red <strong>OVERRUN WARNING</strong> ensures you abort the approach.</p>
+            <img src="ضع_لينك_الصورة_هنا" alt="Landing Results Screen" class="success-img">
+        </div>
+
+        <!-- Walkthrough: Virtual Crew & Audio Briefings -->
+        <div class="setup-step">
+            <span class="step-label">Virtual Crew</span>
+            <h3>Interactive Checklists & Audio Briefings</h3>
+            <p>Elevate your simulation to a professional multi-crew environment. Simulator Station introduces a fully integrated Virtual Co-Pilot to assist you throughout every phase of your flight.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">1. Interactive Voice Checklists</strong>
+            Select your aircraft type (e.g., A320 or B737) and choose your current phase of flight (Before Start, Taxi, Line Up, Approach, etc.). The Virtual Pilot will actively read the checklist aloud and execute it with you step-by-step, perfectly mirroring real-world cockpit procedures and ensuring no critical steps are missed.</p>
+            <img src="ضع_لينك_الصورة_هنا" alt="Interactive Checklist Screen" class="success-img" style="margin-bottom: 30px;">
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">2. Professional Audio Briefings</strong>
+            The app dynamically gathers your runway data, precise Take-Off/Landing speeds, and live weather conditions to compile a comprehensive brief. Simply tap <strong>START AUDIO</strong>, and your Virtual Co-Pilot will deliver a complete, professional, and immersive audio briefing for either your departure or arrival, exactly as you would hear on a real flight deck.</p>
+            <img src="ضع_لينك_الصورة_هنا" alt="Audio Briefing Screen" class="success-img">
+        </div>
+
+        <!-- Walkthrough: Smart EFB (NEW) -->
+        <div class="setup-step">
+            <span class="step-label">Smart EFB</span>
+            <h3>Integrated Electronic Flight Bag (iPad)</h3>
+            <p>Simulator Station comes equipped with a fully functional, built-in Electronic Flight Bag (EFB) that mirrors a real-world cockpit tablet. The EFB gives you instant access to four specialized aviation applications: Airport WX, WX Charts, NOTAMs, and a digital Scratchpad.</p>
+            <img src="ضع_لينك_الصورة_هنا" alt="EFB Home Screen" class="success-img" style="margin-bottom: 30px;">
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">1. Aviation Weather Charts (WX Charts)</strong>
+            Generate highly detailed, real-world meteorological charts on the fly. Simply select your desired Chart Type (such as Upper Air Wind/Temp or SIGWX), choose your geographical Region, and set your specific Parameters (Forecast Time and Flight Level). Click <strong>View Weather Chart</strong> to instantly render professional aviation weather overlays for your route.</p>
+            <img src="ضع_لينك_الصورة_هنا" alt="WX Charts Screen" class="success-img" style="margin-bottom: 30px;">
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">2. Global NOTAMs Database</strong>
+            Search for any airport ICAO code worldwide to instantly pull up its active NOTAMs. The app intelligently categorizes the data (All, Aerodrome, Nav, Obstacle) and clearly displays the effective times, expiration times, and active status. You can easily read the detailed text and even copy it directly to your clipboard for flight planning.</p>
+            <img src="ضع_لينك_الصورة_هنا" alt="NOTAMs Screen" class="success-img" style="margin-bottom: 30px;">
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">3. Authentic Digital Scratchpad</strong>
+            Ditch the pen and paper. The EFB includes a highly authentic digital Scratchpad featuring four dedicated, real-world templates: <strong>Takeoff</strong>, <strong>Landing</strong>, <strong>Holding</strong>, and <strong>CRAFT</strong> (Clearances). These templates are meticulously designed to mirror actual pilot notes, allowing you to seamlessly jot down and reference critical V-speeds, altitudes, and ATC clearances dynamically during your flight.</p>
+            <!-- No image placeholder for Scratchpad as requested -->
+        </div>
+
     </section>
 
-    <!-- FAQ SECTION (NEW) -->
+    <!-- FAQ SECTION -->
     <section id="faq" class="setup-section">
         <h2 class="section-title">Frequently Asked Questions</h2>
         <p class="setup-subtitle">Quick answers to the most common questions about Simulator Station.</p>
