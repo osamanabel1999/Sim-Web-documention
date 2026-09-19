@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Elite Aviation EFB 3D Radar</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!-- Mapbox GL JS -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet">
+    <!-- Turf.js لرسم خط مسار الرحلة المقوس (Great Circle) -->
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background-color: #010409; overflow: hidden; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+        /* إخفاء واجهة Mapbox لتبقى الخريطة نظيفة للطيران */
+        .mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right { display: none !important; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        // ==========================================
+        // 1. الإعدادات الأساسية وحالة الخريطة (State)
+        // ==========================================
+        mapboxgl.accessToken = 'pk.eyJ1Ijoib3NhbWFuYWJlbDExMSIsImEiOiJjbXRpbzk0NHkwMXJlMnlzZTNsbDM5ODV1In0.YNQi25itWGx-wmL9zAnBNg';
+
+        // قراءة الإعدادات المبدئية من الرابط (يتم حقنها من Flutter)
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        let state = {
+            vatsim: true,
+            ivao: true,
+            airports: false,
+            callsigns: false,
+            radar: false,
+            flightPath: false,
+            teleportMode: false,
+            depIcao: urlParams.get('dep') || null,
+            arrIcao: urlParams.get('arr') || null,
+            userId: urlParams.get('uid') || null,
+            weather: 'NONE',
+            mapStyle: 'DARK' // DARK or SATELLITE
+        };
+
+        // الستايلات
+        const STYLE_DARK = 'mapbox://styles/osamanabel111/cmtx9fdyi00bo01sg53l7bdsh';
+        const STYLE_SAT = 'mapbox://styles/mapbox/satellite-v9';
+        const OWM_API_KEY = 'd2b9c49baa0f1dac5a0dada3a4c94cc1';
+
+        // ============================================================
+        // EFB RUNTIME OVERLAY PROTECTION
+        // ============================================================
+        // Flutter owns the operational aviation overlays.  This HTML page
+        // must never recolor them or let the base style's lighting/fog make
+        // them appear black/dim when switching DARK <-> SATELLITE.
+        const EFB_RUNTIME_LINE_LAYERS = [
+            'efb-flight-path-casing-v3',
+            'efb-flight-path-layer-v3',
+            'efb-airways-overlay-layer',
+            'efb-segments-line-layer',
+            'efb-fir-line-layer',
+            'efb-oceanic-line-layer',
+            'efb-oceanic-hit-layer'
+        ];
+
+        const EFB_RUNTIME_FILL_LAYERS = [
+            'efb-fir-fill-layer',
+            'efb-segments-fill-layer'
+        ];
+
+        const EFB_RUNTIME_CIRCLE_LAYERS = [
+            'efb-airways-endpoint-layer',
+            'efb-oceanic-endpoint-layer',
+            'efb-pireps-layer',
+            'efb-aurora-low-layer',
+            'efb-aurora-mid-layer',
+            'efb-aurora-high-layer',
+            'efb-aurora-glow-layer'
+        ];
+
+        const EFB_RUNTIME_SYMBOL_LAYERS = [
+            'efb-planes-layer',
+            'efb-airports-layer',
+            'efb-navaids-layer',
+            'efb-waypoints-layer',
+            'efb-airways-name-layer',
+            'efb-airways-alt-layer',
+            'efb-fir-label-layer',
+            'efb-segments-label-layer',
+            'efb-oceanic-label-layer',
+            'efb-pireps-label-layer'
+        ];
+
+        function applyEfbBaseStyleEnvironment() {
+            try {
+                if (state.mapStyle === 'SATELLITE') {
+                    // Satellite-v9 is an imagery base. Do not apply the dark
+                    // atmospheric fog used by the dark aviation style.
+                    map.setFog(null);
+                } else {
+                    map.setFog({
+                        'color': 'rgb(4, 10, 24)',
+                        'high-color': 'rgb(36, 92, 223)',
+                        'horizon-blend': 0.1,
+                        'space-color': 'rgb(2, 4, 10)',
+                        'star-intensity': 0.7
+                    });
+                }
+            } catch (e) {}
+        }
+
+        function applyEfbRuntimeLighting() {
+            if (!map || !map.isStyleLoaded()) return;
+
+            // Mapbox GL JS 3.x can apply style lighting to custom layers.
+            // Emissive strength 1 makes Flutter-owned overlays retain their
+            // authored colors instead of becoming darkened by the basemap.
+            EFB_RUNTIME_LINE_LAYERS.forEach(function(id) {
+                try {
+                    if (map.getLayer(id)) {
+                        map.setPaintProperty(id, 'line-emissive-strength', 1);
+                    }
+                } catch (e) {}
+            });
+
+            EFB_RUNTIME_FILL_LAYERS.forEach(function(id) {
+                try {
+                    if (map.getLayer(id)) {
+                        map.setPaintProperty(id, 'fill-emissive-strength', 1);
+                    }
+                } catch (e) {}
+            });
+
+            EFB_RUNTIME_CIRCLE_LAYERS.forEach(function(id) {
+                try {
+                    if (map.getLayer(id)) {
+                        map.setPaintProperty(id, 'circle-emissive-strength', 1);
+                    }
+                } catch (e) {}
+            });
+
+            EFB_RUNTIME_SYMBOL_LAYERS.forEach(function(id) {
+                try {
+                    if (map.getLayer(id)) {
+                        map.setPaintProperty(id, 'text-emissive-strength', 1);
+                    }
+                } catch (e) {}
+                try {
+                    if (map.getLayer(id)) {
+                        map.setPaintProperty(id, 'icon-emissive-strength', 1);
+                    }
+                } catch (e) {}
+            });
+
+            // The Flutter bridge already owns the exact operational colors.
+            // Re-apply them after the new base style and after Flutter has
+            // rebuilt its runtime layers.
+            try {
+                if (typeof window.forceEfbOperationalLayerColors === 'function') {
+                    window.forceEfbOperationalLayerColors();
+                }
+            } catch (e) {}
+        }
+
+        function stabilizeEfbRuntimeOverlays() {
+            // Style replacement + WebView/Flutter injection can finish on
+            // different ticks. Apply on several short ticks so no base-style
+            // operation can leave the Flutter overlays in a stale visual state.
+            const delays = [0, 60, 180, 400, 800];
+            delays.forEach(function(delay) {
+                setTimeout(function() {
+                    try {
+                        applyEfbBaseStyleEnvironment();
+                        applyEfbRuntimeLighting();
+                    } catch (e) {}
+                }, delay);
+            });
+        }
+
+        // متغيرات البيانات
+        let rawAirports = [];
+        let planesGeoJSON = { type: 'FeatureCollection', features: [] };
+        let teleportMarker = null;
+
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: STYLE_DARK,
+            center: [parseFloat(urlParams.get('lon')) || 31.0, parseFloat(urlParams.get('lat')) || 30.0],
+            zoom: parseFloat(urlParams.get('zoom')) || 5.0,
+            projection: 'globe',
+            attributionControl: false
+        });
+
+        // ==========================================
+        // 2. دوال الاتصال مع FlutterFlow (The Bridge)
+        // ==========================================
+        
+        // إرسال بيانات لـ Flutter
+        function sendToFlutter(action, data) {
+            const payload = JSON.stringify({ action: action, data: data });
+            if (window.EFBMapChannel) {
+                window.EFBMapChannel.postMessage(payload);
+            }
+        }
+
+        // استقبال أوامر من Flutter (Exposed Globally)
+        window.setMapState = function(key, value) {
+            state[key] = value;
+            if (key === 'mapStyle') {
+                // The persistent style.load handler owns layer
+                // re-initialization. Avoid a second initLayers callback here,
+                // which can race Flutter's runtime-layer rehydration.
+                map.setStyle(value === 'SATELLITE' ? STYLE_SAT : STYLE_DARK);
+                stabilizeEfbRuntimeOverlays();
+            } else if (key === 'weather') {
+                updateWeather();
+            } else if (key === 'flightPath' || key === 'depIcao' || key === 'arrIcao') {
+                drawFlightPath();
+                updateAirportsStyle();
+            } else if (key === 'teleportMode') {
+                if (!value && teleportMarker) {
+                    teleportMarker.remove();
+                    teleportMarker = null;
+                }
+            } else {
+                updateVisibility();
+                if (key === 'vatsim' || key === 'ivao') fetchPlanes();
+            }
+        };
+
+        window.triggerTeleport = function(lat, lon, hdg) {
+            if(!teleportMarker) {
+                const el = document.createElement('div');
+                el.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="#DC2626"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>`;
+                el.style.transform = `rotate(${hdg}deg)`;
+                teleportMarker = new mapboxgl.Marker(el).setLngLat([lon, lat]).addTo(map);
+            } else {
+                teleportMarker.setLngLat([lon, lat]);
+                teleportMarker.getElement().style.transform = `rotate(${hdg}deg)`;
+            }
+            map.flyTo({ center: [lon, lat], zoom: 10 });
+        };
+
+        window.flyToCoords = function(lat, lon, zoom) {
+            map.flyTo({ center: [lon, lat], zoom: zoom || 10 });
+        };
+
+        // ==========================================
+        // 3. تهيئة الطبقات والمصادر (Layers & Sources)
+        // ==========================================
+        
+        map.on('style.load', () => {
+            // Keep the base environment appropriate to the selected style.
+            // Never carry the dark atmospheric fog into Satellite.
+            applyEfbBaseStyleEnvironment();
+
+            // تحميل أيقونة الطائرة الأصلية
+            map.loadImage('https://upload.wikimedia.org/wikipedia/commons/1/17/Airplane_silhouette_orange.svg', (error, image) => {
+                if (error) throw error;
+                if (!map.hasImage('plane-icon')) map.addImage('plane-icon', image, { sdf: true });
+                initLayers();
+                fetchAirports();
+                fetchPlanes();
+                stabilizeEfbRuntimeOverlays();
+            });
+        });
+
+        function initLayers() {
+            // Weather Sources
+            if(!map.getSource('owm-rain')) {
+                map.addSource('owm-rain', { type: 'raster', tiles: [`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${OWM_API_KEY}`], tileSize: 256 });
+                map.addSource('owm-temp', { type: 'raster', tiles: [`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${OWM_API_KEY}`], tileSize: 256 });
+                map.addSource('owm-wind', { type: 'raster', tiles: [`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${OWM_API_KEY}`], tileSize: 256 });
+                
+                map.addLayer({ id: 'layer-rain', type: 'raster', source: 'owm-rain', layout: { visibility: 'none' }, paint: { 'raster-opacity': 0.6 } });
+                map.addLayer({ id: 'layer-temp', type: 'raster', source: 'owm-temp', layout: { visibility: 'none' }, paint: { 'raster-opacity': 0.6 } });
+                map.addLayer({ id: 'layer-wind', type: 'raster', source: 'owm-wind', layout: { visibility: 'none' }, paint: { 'raster-opacity': 0.6 } });
+            }
+
+            // Flight Path
+            if(!map.getSource('flight-path')) {
+                map.addSource('flight-path', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+                map.addLayer({
+                    id: 'flight-path-layer',
+                    type: 'line',
+                    source: 'flight-path',
+                    layout: { 'line-join': 'round', 'line-cap': 'round', visibility: 'none' },
+                    paint: { 'line-color': '#FF4081', 'line-width': 3.5, 'line-opacity': 0.8 }
+                });
+            }
+
+            // Airports
+            if(!map.getSource('airports')) {
+                map.addSource('airports', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+                
+                // دوائر المطارات (اللون الوردي للهدف، السماوي للعادي)
+                map.addLayer({
+                    id: 'airports-circle',
+                    type: 'circle',
+                    source: 'airports',
+                    layout: { visibility: 'none' },
+                    paint: {
+                        'circle-radius': ['case', ['==', ['get', 'isTarget'], true], 9, 7],
+                        'circle-color': ['case', ['==', ['get', 'isTarget'], true], '#FF4081', '#18FFFF'],
+                        'circle-stroke-width': ['case', ['==', ['get', 'isTarget'], true], 2.5, 1.5],
+                        'circle-stroke-color': '#FFFFFF'
+                    }
+                });
+
+                // أسماء المطارات
+                map.addLayer({
+                    id: 'airports-label',
+                    type: 'symbol',
+                    source: 'airports',
+                    layout: {
+                        'visibility': 'none',
+                        'text-field': ['get', 'icao'],
+                        'text-size': ['case', ['==', ['get', 'isTarget'], true], 12, 10],
+                        'text-offset': [0, 1.2],
+                        'text-anchor': 'top'
+                    },
+                    paint: {
+                        'text-color': ['case', ['==', ['get', 'isTarget'], true], '#FF4081', '#FFFFFF'],
+                        'text-halo-color': '#000000',
+                        'text-halo-width': 2
+                    }
+                });
+            }
+
+            // Planes
+            if(!map.getSource('planes')) {
+                map.addSource('planes', { type: 'geojson', data: planesGeoJSON });
+                
+                // أيقونة الطائرة الدوارة
+                map.addLayer({
+                    id: 'planes-icon',
+                    type: 'symbol',
+                    source: 'planes',
+                    layout: {
+                        'icon-image': 'plane-icon',
+                        'icon-size': ['case', ['==', ['get', 'isUser'], true], 0.8, 0.6],
+                        'icon-rotate': ['get', 'hdg'],
+                        'icon-allow-overlap': true
+                    },
+                    paint: {
+                        'icon-color': ['get', 'color']
+                    }
+                });
+
+                // نصوص Callsigns العادية
+                map.addLayer({
+                    id: 'planes-callsign',
+                    type: 'symbol',
+                    source: 'planes',
+                    layout: {
+                        'visibility': 'none',
+                        'text-field': ['get', 'callsign'],
+                        'text-size': 10,
+                        'text-offset': [0, -1.5],
+                        'text-anchor': 'bottom'
+                    },
+                    paint: {
+                        'text-color': ['get', 'color'],
+                        'text-halo-color': '#000000',
+                        'text-halo-width': 2
+                    }
+                });
+
+                // مربعات الرادار الاحترافية
+                map.addLayer({
+                    id: 'planes-radar',
+                    type: 'symbol',
+                    source: 'planes',
+                    layout: {
+                        'visibility': 'none',
+                        'text-field': ['concat', ['get', 'callsign'], '\nALT: ', ['get', 'alt'], ' | HDG: ', ['get', 'hdg'], '°\nGS: ', ['get', 'gs'], ' | VS: ', ['get', 'vs']],
+                        'text-size': 9,
+                        'text-offset': [1.5, 0],
+                        'text-anchor': 'left',
+                        'text-justify': 'left',
+                    },
+                    paint: {
+                        'text-color': '#FFFFFF',
+                        'text-halo-color': '#000000',
+                        'text-halo-width': 3
+                    }
+                });
+            }
+
+            updateVisibility();
+            updateWeather();
+        }
+
+        // ==========================================
+        // 4. جلب وعرض البيانات (APIs)
+        // ==========================================
+
+        async function fetchAirports() {
+            try {
+                const res = await fetch('https://gist.githubusercontent.com/tdreyno/4278655/raw/airports.json');
+                rawAirports = await res.json();
+                updateAirportsStyle();
+            } catch (e) {}
+        }
+
+        async function fetchPlanes() {
+            let features = [];
+            
+            if (state.vatsim) {
+                try {
+                    const res = await fetch('https://data.vatsim.net/v3/vatsim-data.json');
+                    const data = await res.json();
+                    data.pilots.forEach(p => {
+                        features.push(createPlaneFeature(p, 'VATSIM', true, '#FFC107', p.cid.toString()));
+                    });
+                } catch (e) {}
+            }
+            
+            if (state.ivao) {
+                try {
+                    const res = await fetch('https://api.ivao.aero/v2/tracker/whazzup');
+                    const data = await res.json();
+                    data.clients.pilots.forEach(p => {
+                        features.push(createPlaneFeature(p, 'IVAO', false, '#69F0AE', p.userId.toString()));
+                    });
+                } catch (e) {}
+            }
+
+            planesGeoJSON.features = features;
+            if (map.getSource('planes')) {
+                map.getSource('planes').setData(planesGeoJSON);
+            }
+        }
+
+        function createPlaneFeature(p, net, isVatsim, baseColor, id) {
+            const lat = isVatsim ? p.latitude : p.lastTrack?.latitude;
+            const lon = isVatsim ? p.longitude : p.lastTrack?.longitude;
+            const hdg = isVatsim ? p.heading : p.lastTrack?.heading;
+            const alt = isVatsim ? p.altitude : p.lastTrack?.altitude;
+            const gs = isVatsim ? p.groundspeed : p.lastTrack?.groundSpeed;
+            const vs = isVatsim ? p.vertical_speed : p.lastTrack?.verticalSpeed;
+            const color = (state.userId && state.userId === id) ? '#FF5252' : baseColor;
+
+            return {
+                type: 'Feature',
+                properties: {
+                    id: id,
+                    callsign: p.callsign || 'N/A',
+                    net: net,
+                    isVatsim: isVatsim,
+                    hdg: Math.round(hdg || 0),
+                    alt: Math.round(alt || 0),
+                    gs: Math.round(gs || 0),
+                    vs: Math.round(vs || 0),
+                    color: color,
+                    isUser: (state.userId && state.userId === id),
+                    raw: p // تخزين الـ JSON الكامل لبعثه لـ Flutter
+                },
+                geometry: { type: 'Point', coordinates: [lon || 0, lat || 0] }
+            };
+        }
+
+        function updateAirportsStyle() {
+            if (rawAirports.length === 0) return;
+            let features = [];
+            
+            rawAirports.forEach(ap => {
+                const icao = ap.icao || "";
+                const isTarget = (icao === state.depIcao || icao === state.arrIcao);
+                // عرض المطار لو زرار المطارات شغال، أو لو المطار ده هو نقطة بداية/نهاية المسار
+                if (state.airports || (state.flightPath && isTarget)) {
+                    features.push({
+                        type: 'Feature',
+                        properties: { icao: icao, isTarget: isTarget, raw: ap },
+                        geometry: { type: 'Point', coordinates: [parseFloat(ap.lon), parseFloat(ap.lat)] }
+                    });
+                }
+            });
+
+            if (map.getSource('airports')) {
+                map.getSource('airports').setData({ type: 'FeatureCollection', features: features });
+            }
+        }
+
+        function drawFlightPath() {
+            if (!state.flightPath || !state.depIcao || !state.arrIcao || rawAirports.length === 0) {
+                if (map.getSource('flight-path')) map.getSource('flight-path').setData({ type: 'FeatureCollection', features: [] });
+                return;
+            }
+
+            const dep = rawAirports.find(a => a.icao === state.depIcao);
+            const arr = rawAirports.find(a => a.icao === state.arrIcao);
+
+            if (dep && arr) {
+                // رسم الخط المقوس بواسطة Turf.js
+                const start = [parseFloat(dep.lon), parseFloat(dep.lat)];
+                const end = [parseFloat(arr.lon), parseFloat(arr.lat)];
+                const greatCircle = turf.greatCircle(start, end);
+                if (map.getSource('flight-path')) map.getSource('flight-path').setData(greatCircle);
+            }
+        }
+
+        function updateVisibility() {
+            if(!map.getLayer('airports-circle')) return;
+            
+            map.setLayoutProperty('airports-circle', 'visibility', (state.airports || state.flightPath) ? 'visible' : 'none');
+            map.setLayoutProperty('airports-label', 'visibility', (state.airports || state.flightPath) ? 'visible' : 'none');
+            
+            // Flutter owns the operational Flight Path. Keep the legacy
+            // HTML compatibility layer hidden so it can never compete with
+            // the Flutter-colored layer after a style switch.
+            map.setLayoutProperty('flight-path-layer', 'visibility', 'none');
+            
+            map.setLayoutProperty('planes-callsign', 'visibility', (state.callsigns && !state.radar) ? 'visible' : 'none');
+            map.setLayoutProperty('planes-radar', 'visibility', state.radar ? 'visible' : 'none');
+        }
+
+        function updateWeather() {
+            if(!map.getLayer('layer-rain')) return;
+            map.setLayoutProperty('layer-rain', 'visibility', state.weather === 'RAIN' ? 'visible' : 'none');
+            map.setLayoutProperty('layer-temp', 'visibility', state.weather === 'TEMP' ? 'visible' : 'none');
+            map.setLayoutProperty('layer-wind', 'visibility', state.weather === 'WIND' ? 'visible' : 'none');
+        }
+
+        // ==========================================
+        // 5. التفاعل بالضغط (Clicks to Flutter)
+        // ==========================================
+
+        map.on('click', 'planes-icon', (e) => {
+            if (e.features.length > 0) {
+                const prop = e.features[0].properties;
+                sendToFlutter('PLANE_CLICKED', { type: 'PLANE', net: prop.net, isVatsim: prop.isVatsim, data: JSON.parse(prop.raw) });
+            }
+        });
+
+        map.on('click', 'airports-circle', (e) => {
+            if (e.features.length > 0) {
+                const prop = e.features[0].properties;
+                sendToFlutter('AIRPORT_CLICKED', { type: 'AIRPORT', data: JSON.parse(prop.raw) });
+            }
+        });
+
+        map.on('click', (e) => {
+            // تجاهل لو الضغطة كانت على طيارة أو مطار
+            const features = map.queryRenderedFeatures(e.point, { layers: ['planes-icon', 'airports-circle'] });
+            if (features.length > 0) return;
+
+            if (state.teleportMode) {
+                sendToFlutter('TELEPORT_CLICKED', { lat: e.lngLat.lat, lon: e.lngLat.lng });
+            } else {
+                sendToFlutter('MAP_CLICKED', {});
+            }
+        });
+
+        // تغيير شكل الماوس عند المرور فوق العناصر
+        map.on('mouseenter', 'planes-icon', () => map.getCanvas().style.cursor = 'pointer');
+        map.on('mouseleave', 'planes-icon', () => map.getCanvas().style.cursor = '');
+        map.on('mouseenter', 'airports-circle', () => map.getCanvas().style.cursor = 'pointer');
+        map.on('mouseleave', 'airports-circle', () => map.getCanvas().style.cursor = '');
+
+        // تحديث حي للطائرات كل 30 ثانية
+        setInterval(fetchPlanes, 30000);
+
+    </script>
+</body>
+</html>
