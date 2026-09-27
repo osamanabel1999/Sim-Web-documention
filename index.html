@@ -175,6 +175,114 @@
         }
 
         /* ==========================================
+           WHAT'S NEW (LATEST RELEASE) SECTION 🔥
+           ========================================== */
+        .whats-new-section {
+            padding: 60px 20px;
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-main) 100%);
+            border: 1px solid var(--accent);
+            border-radius: 16px;
+            box-shadow: 0 0 40px rgba(99, 157, 240, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .whats-new-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: var(--accent);
+        }
+        .whats-new-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+        .whats-new-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+        
+        .feature-highlight {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        .feature-highlight.reverse {
+            flex-direction: row-reverse;
+        }
+        .feature-image {
+            flex: 1;
+        }
+        .feature-image img {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+        }
+        .feature-image img:hover {
+            transform: scale(1.02);
+            border-color: var(--accent);
+        }
+        .feature-text {
+            flex: 1;
+        }
+        .feature-text h3 {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+        .feature-text p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        .whats-new-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 40px;
+        }
+        .new-card {
+            background-color: rgba(16, 25, 35, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+        .new-card:hover {
+            border-color: var(--accent);
+            background-color: var(--bg-card);
+        }
+        .new-card h4 {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .new-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* ==========================================
            FEATURES GRID
            ========================================== */
         .features-section {
@@ -453,6 +561,13 @@
             .custom-list li strong {
                 min-width: auto;
             }
+            .feature-highlight, .feature-highlight.reverse {
+                flex-direction: column !important;
+                gap: 20px;
+            }
+            .whats-new-title {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
@@ -466,6 +581,7 @@
         </div>
         <div class="nav-links">
             <a href="#" class="active">MSFS Home</a>
+            <a href="#whatsnew">What's New 🔥</a>
             <a href="#features">Features</a>
             <a href="#setup">Installation & Connection</a>
             <a href="#walkthrough">Walkthrough</a>
@@ -480,14 +596,74 @@
         <p>Elevate your Microsoft Flight Simulator experience with precision aircraft repositioning, live interactive radar, virtual crew operations, and a fully integrated smart EFB.</p>
         
         <div class="hero-actions">
-            <a href="#features" class="btn btn-primary">Explore Features</a>
-            <a href="#setup" class="btn btn-secondary">Installation & Connection (Next)</a>
+            <a href="#whatsnew" class="btn btn-primary">See What's New</a>
+            <a href="#setup" class="btn btn-secondary">Installation & Connection</a>
         </div>
 
         <div class="app-showcase">
             <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3793.png" alt="Simulator Station Interface">
         </div>
     </header>
+
+    <!-- WHAT'S NEW SECTION 🔥 -->
+    <section id="whatsnew" class="whats-new-section">
+        <h2 class="whats-new-title">🚀 The Biggest Update in Simulator Station History</h2>
+        <p class="whats-new-subtitle">Flight simulator captains, fasten your seatbelts! This is not just an update; it is a quantum leap that will change the way you fly forever. We have turned your room into a real cockpit.</p>
+        
+        <!-- Head Tracker Highlight -->
+        <div class="feature-highlight">
+            <div class="feature-image">
+                <img src="https://raw.githubusercontent.com/osamanabel1999/App-assets/refs/heads/main/IMG_3855.png" alt="Head Tracker Feature">
+            </div>
+            <div class="feature-text">
+                <h3>👀 Revolutionary Head Tracker</h3>
+                <p>Goodbye to traditional camera controls! Now, your device's camera will track your head movements and translate them directly into the simulator in real-time. Look left or right to see the cockpit move with you, just as if you were actually sitting in the captain's chair. This immersive technology creates an unprecedented level of realism, making you feel every turn and pitch physically inside the aircraft!</p>
+            </div>
+        </div>
+
+        <!-- EFB Highlight -->
+        <div class="feature-highlight reverse">
+            <div class="feature-image">
+                <img src="https://raw.githubusercontent.com/osamanabel1999/App-assets/refs/heads/main/IMG_3853.png" alt="Realistic EFB Interface">
+            </div>
+            <div class="feature-text">
+                <h3>📱 Fully Integrated & Realistic EFB</h3>
+                <p>We have completely rebuilt the Electronic Flight Bag (EFB) to function exactly like a real tablet inside your cockpit! Look at the interface—it literally feels like holding a real iPad with essential aviation apps running seamlessly in the background. It is your ultimate flight companion, designed specifically to bring a true-to-life pilot workspace directly into your hands.</p>
+            </div>
+        </div>
+
+        <!-- Other Features Grid -->
+        <div class="whats-new-grid">
+            <div class="new-card">
+                <h4>🧠 AI Dispatcher</h4>
+                <p>The briefing experience has come to life! A true AI-powered dispatcher will prepare and read your complete flight report in a highly realistic human voice, detailing your route, weather, and en-route NOTAMs so you are prepared for any surprises.</p>
+            </div>
+            <div class="new-card">
+                <h4>👨‍✈️ Enhanced Virtual Co-Pilot</h4>
+                <p>Your beloved virtual co-pilot just got a massive upgrade! With incredibly realistic new voices and smarter features, you will never run a checklist alone. Your co-pilot is ready for every phase of the flight, ensuring professional operations.</p>
+            </div>
+            <div class="new-card">
+                <h4>🧮 Flight Calculator</h4>
+                <p>An advanced aviation calculator integrated directly into the EFB that performs complex math in seconds, including crucial Top of Descent (TOD) calculations for professional and smooth approaches.</p>
+            </div>
+            <div class="new-card">
+                <h4>💼 Flight Bag</h4>
+                <p>Upload, organize, and save any essential files, charts, or manuals (like your aircraft's QRH). Access them in the blink of an eye directly from your virtual iPad during cruise or critical emergencies.</p>
+            </div>
+            <div class="new-card">
+                <h4>🌐 In-App Browser</h4>
+                <p>A seamlessly integrated web browser inside the EFB allowing you to surf any aviation website, check real-world charts, or search for data without ever leaving the Simulator Station app.</p>
+            </div>
+            <div class="new-card">
+                <h4>🔊 Authentic Cabin PA</h4>
+                <p>Bring your flight to life! Experience authentic cabin announcements tailored perfectly for every phase of your flight, including passenger boarding, takeoff, turbulence warnings, and landing.</p>
+            </div>
+            <div class="new-card" style="grid-column: 1 / -1;">
+                <h4>⚡ Redesigned UI/UX & Blazing Performance</h4>
+                <p>A stunning new glassmorphism interface that feels premium and is easy on the eyes. We have made massive under-the-hood performance improvements and completely eradicated minor bugs to guarantee a smooth, uninterrupted flight experience.</p>
+            </div>
+        </div>
+    </section>
 
     <!-- FEATURES GRID -->
     <section id="features" class="features-section">
