@@ -175,7 +175,7 @@
         }
 
         /* ==========================================
-           WHAT'S NEW (LATEST RELEASE) SECTION 🔥
+           WHAT'S NEW SECTION 🔥
            ========================================== */
         .whats-new-section {
             padding: 60px 20px;
@@ -486,6 +486,26 @@
             margin-top: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
+        
+        /* Video Container for responsive Youtube embed */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-top: 25px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 
         /* ==========================================
            FAQ SECTION
@@ -605,62 +625,27 @@
         </div>
     </header>
 
-    <!-- WHAT'S NEW SECTION 🔥 -->
+    <!-- WHAT'S NEW SECTION 🔥 (NEW FEATURES ONLY) -->
     <section id="whatsnew" class="whats-new-section">
-        <h2 class="whats-new-title">🚀 The Biggest Update in Simulator Station History</h2>
-        <p class="whats-new-subtitle">Flight simulator captains, fasten your seatbelts! This is not just an update; it is a quantum leap that will change the way you fly forever. We have turned your room into a real cockpit.</p>
+        <h2 class="whats-new-title">🚀 Redefining Virtual Aviation</h2>
+        <p class="whats-new-subtitle">Simulator Station introduces groundbreaking professional features, designed to bridge the gap between desktop simulation and real-world aviation training methodologies.</p>
         
-        <!-- Head Tracker Highlight -->
+        <!-- IOS Highlight (NO IMAGE) -->
         <div class="feature-highlight">
-            <div class="feature-image">
-                <img src="https://raw.githubusercontent.com/osamanabel1999/App-assets/refs/heads/main/IMG_3855.png" alt="Head Tracker Feature">
-            </div>
-            <div class="feature-text">
-                <h3>👀 Revolutionary Head Tracker</h3>
-                <p>Goodbye to traditional camera controls! Now, your device's camera will track your head movements and translate them directly into the simulator in real-time. Look left or right to see the cockpit move with you, just as if you were actually sitting in the captain's chair. This immersive technology creates an unprecedented level of realism, making you feel every turn and pitch physically inside the aircraft!</p>
+            <div class="feature-text" style="flex: 100%; text-align: center;">
+                <h3 style="margin-bottom: 20px;">Instructor Operating Station (IOS) Integration</h3>
+                <p style="max-width: 900px; margin: 0 auto;">Transform standard flight sessions into professional training scenarios. Simulator Station now incorporates a fully synchronized Instructor Operating Station (IOS). This feature provides real-time cockpit screen streaming and zero-latency audio communication. Instructors maintain complete environmental authority, enabling instant aircraft repositioning to critical flight phases—such as Final Approach, Base legs, or specific Navaids—facilitating repetitive IFR/VFR procedural mastery. Furthermore, the system supports dynamic failure injection, allowing instructors to trigger unexpected system malfunctions mid-flight to meticulously evaluate pilot decision-making under realistic pressures.</p>
             </div>
         </div>
 
-        <!-- EFB Highlight -->
-        <div class="feature-highlight reverse">
+        <!-- ACARS Highlight (WITH NEW IMAGE) -->
+        <div class="feature-highlight reverse" style="margin-top: 40px;">
             <div class="feature-image">
-                <img src="https://raw.githubusercontent.com/osamanabel1999/App-assets/refs/heads/main/IMG_3853.png" alt="Realistic EFB Interface">
+                <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3879.png" alt="Authentic ACARS Datalink">
             </div>
             <div class="feature-text">
-                <h3>📱 Fully Integrated & Realistic EFB</h3>
-                <p>We have completely rebuilt the Electronic Flight Bag (EFB) to function exactly like a real tablet inside your cockpit! Look at the interface—it literally feels like holding a real iPad with essential aviation apps running seamlessly in the background. It is your ultimate flight companion, designed specifically to bring a true-to-life pilot workspace directly into your hands.</p>
-            </div>
-        </div>
-
-        <!-- Other Features Grid -->
-        <div class="whats-new-grid">
-            <div class="new-card">
-                <h4>🧠 AI Dispatcher</h4>
-                <p>The briefing experience has come to life! A true AI-powered dispatcher will prepare and read your complete flight report in a highly realistic human voice, detailing your route, weather, and en-route NOTAMs so you are prepared for any surprises.</p>
-            </div>
-            <div class="new-card">
-                <h4>👨‍✈️ Enhanced Virtual Co-Pilot</h4>
-                <p>Your beloved virtual co-pilot just got a massive upgrade! With incredibly realistic new voices and smarter features, you will never run a checklist alone. Your co-pilot is ready for every phase of the flight, ensuring professional operations.</p>
-            </div>
-            <div class="new-card">
-                <h4>🧮 Flight Calculator</h4>
-                <p>An advanced aviation calculator integrated directly into the EFB that performs complex math in seconds, including crucial Top of Descent (TOD) calculations for professional and smooth approaches.</p>
-            </div>
-            <div class="new-card">
-                <h4>💼 Flight Bag</h4>
-                <p>Upload, organize, and save any essential files, charts, or manuals (like your aircraft's QRH). Access them in the blink of an eye directly from your virtual iPad during cruise or critical emergencies.</p>
-            </div>
-            <div class="new-card">
-                <h4>🌐 In-App Browser</h4>
-                <p>A seamlessly integrated web browser inside the EFB allowing you to surf any aviation website, check real-world charts, or search for data without ever leaving the Simulator Station app.</p>
-            </div>
-            <div class="new-card">
-                <h4>🔊 Authentic Cabin PA</h4>
-                <p>Bring your flight to life! Experience authentic cabin announcements tailored perfectly for every phase of your flight, including passenger boarding, takeoff, turbulence warnings, and landing.</p>
-            </div>
-            <div class="new-card" style="grid-column: 1 / -1;">
-                <h4>⚡ Redesigned UI/UX & Blazing Performance</h4>
-                <p>A stunning new glassmorphism interface that feels premium and is easy on the eyes. We have made massive under-the-hood performance improvements and completely eradicated minor bugs to guarantee a smooth, uninterrupted flight experience.</p>
+                <h3>Authentic ACARS & CPDLC Datalink</h3>
+                <p>Experience the absolute pinnacle of airline communications with a fully functional, study-level datalink architecture. Integrated seamlessly with VATSIM and IVAO networks, the ACARS module allows virtual pilots to send and receive free-text TELEX messages to ATC and active network traffic. Streamline high-workload phases by transmitting one-tap quick requests for Pre-Departure Clearances, pushbacks, and altitude step-climbs. The system also introduces a true-to-life CPDLC interface for instant ATC compliance (WILCO, STANDBY, UNABLE), live METAR/TAF fetching, and automated Oceanic Position Reports for precise cross-continental tracking.</p>
             </div>
         </div>
     </section>
@@ -751,7 +736,7 @@
             </ul>
         </div>
 
-        <!-- Step 1 (MODIFIED) -->
+        <!-- Step 1 -->
         <div class="setup-step">
             <span class="step-label">Step 1</span>
             <h3>Download the Bridge File</h3>
@@ -836,6 +821,70 @@
             <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3794.png" alt="World Tour Screen" class="success-img">
         </div>
 
+        <!-- NEWLY MOVED SECTION: Next-Gen Cockpit Tools & Immersion -->
+        <div class="setup-step">
+            <span class="step-label">Immersive Environment</span>
+            <h3>Next-Gen Cockpit Tools & AI Integration</h3>
+            <p>Experience a fully operational virtual flight deck with advanced tools designed to increase immersion and streamline your flight workflow.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">1. Dynamic Head Tracking</strong>
+            Utilizing device camera integration, the system actively tracks head movements and translates them directly into the simulator in real-time. Panning your vision physically shifts the virtual cockpit camera, creating a remarkably authentic sensation of situational awareness inside the flight deck.</p>
+            <img src="https://raw.githubusercontent.com/osamanabel1999/App-assets/refs/heads/main/IMG_3855.png" alt="Head Tracker Feature" class="success-img" style="margin-bottom: 30px;">
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">2. Fully Integrated Electronic Flight Bag (EFB)</strong>
+            The EFB interface is meticulously designed to mirror a real-world cockpit tablet. It operates independently, granting immediate access to crucial aviation utilities, performance calculations, and an integrated flight bag for managing complex manuals and operational charts.</p>
+            <img src="https://raw.githubusercontent.com/osamanabel1999/App-assets/refs/heads/main/IMG_3853.png" alt="Realistic EFB Interface" class="success-img" style="margin-bottom: 30px;">
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">3. AI Dispatch & Virtual Co-Pilot Operations</strong>
+            Enhance the multi-crew experience with AI-powered dispatchers that deliver comprehensive flight briefings in a realistic human voice. In addition, an advanced Virtual Co-Pilot actively assists in executing phase-by-phase operational checklists.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">4. In-App Browser & Authentic Cabin PA</strong>
+            An embedded web browser allows pilots to access external aviation data without leaving the application. To further enhance realism, the system includes an authentic Cabin Public Address module tailored for boarding, cruising, and landing phases.</p>
+        </div>
+
+        <!-- Walkthrough: Professional Training (IOS) -->
+        <div class="setup-step">
+            <span class="step-label">Professional Training</span>
+            <h3>Instructor Operating Station (IOS) & Shared Sessions</h3>
+            <p>The Instructor Operating Station transforms Simulator Station into a professional flight school environment, allowing a second user to monitor and control the simulation parameters remotely.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">1. Live Cockpit Streaming & Comms</strong>
+            Pilots can share their entire flight session with an instructor in real-time. The instructor receives a seamless, zero-latency stream of the cockpit instruments along with live audio communication, replicating the experience of sitting shoulder-to-shoulder on the flight deck.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">2. Instant Aircraft Repositioning</strong>
+            Instructors hold complete authority over the aircraft's position. With a single click, they can instantly teleport the aircraft to specific approach points (e.g., Final Approach, Downwind leg) or directly over a Navaid. This facilitates rapid, repetitive practice of complex IFR/VFR procedures without the necessity of flying the full traffic pattern.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">3. Dynamic Failure Injection</strong>
+            To rigorously test piloting skills, reaction times, and decision-making under pressure, instructors can silently trigger unexpected system failures mid-flight.</p>
+            
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">4. The Ultimate Evaluation Tool</strong>
+            Whether conducting a Virtual Airline check-ride, running a structured training syllabus, or casually learning with a peer, the Instructor Station brings true-to-life simulator training capabilities directly to the iPad.</p>
+        </div>
+
+        <!-- Walkthrough: ACARS & CPDLC -->
+        <div class="setup-step">
+            <span class="step-label">Airline Operations</span>
+            <h3>Functional ACARS & CPDLC Datalink</h3>
+            <p>Simulator Station bridges the gap between simulation and real-world aviation communication by delivering authentic airline datalink operations directly to the EFB interface.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">1. VATSIM & IVAO Integration</strong>
+            Connect the Datalink module directly to online networks. Experience authentic text-based communication with virtual air traffic controllers, perfectly replicating modern flight deck environments.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">2. TELEX (Free Text) Messaging</strong>
+            Pilots can send and receive custom text messages directly to ATC or any other aircraft callsign currently operating on the network. This provides an excellent tool for coordinating with company traffic or dispatch.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">3. One-Tap Quick ATC Requests</strong>
+            Streamline high-workload phases by transmitting Pre-Departure Clearances (PDC), Push/Start requests, Taxi routing, Level changes, and Direct-To requests with just a single tap.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">4. Authentic CPDLC Station</strong>
+            When Air Traffic Control transmits a Datalink instruction, pilots can respond instantly and professionally utilizing standardized real-world CPDLC inputs (e.g., WILCO, STANDBY, UNABLE, ROGER).</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">5. Live Weather Data & Oceanic Reports</strong>
+            Fetch highly accurate METAR, TAF, and D-ATIS reports instantly. For long-haul operations across the Atlantic or Pacific, pilots can easily log Waypoints, Times, Flight Levels, and Speeds to generate professional oceanic position reports directly through the ACARS interface.</p>
+            
+            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3879.png" alt="ACARS and CPDLC Interface" class="success-img">
+        </div>
+
         <!-- Walkthrough: Interactive Map & Global Radar -->
         <div class="setup-step">
             <span class="step-label">Navigation & Radar</span>
@@ -870,14 +919,6 @@
             <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3773.png" alt="Flight Plan Data" class="success-img">
         </div>
 
-        <!-- Walkthrough: Pushback -->
-        <div class="setup-step">
-            <span class="step-label">Ground Operations</span>
-            <h3>Interactive Pushback Control</h3>
-            <p>Take complete command of ground operations without ever touching your PC. Connect the tug and use intuitive one-touch controls to push back straight, or precisely turn the tail left or right to align with the taxiway.</p>
-            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3775.png" alt="Pushback Control Screen" class="success-img">
-        </div>
-
         <!-- Walkthrough: Performance Calculation -->
         <div class="setup-step">
             <span class="step-label">Flight Operations</span>
@@ -899,58 +940,6 @@
             <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">4. Precise Landing Distances & Overrun Warnings</strong>
             Review your precise Approach Speed (VAPP) and Minimum Selectable Speed (VLS). The calculator actively compares your <i>Actual Distance</i> against the <i>Factored Distance</i> to tell you exactly how much runway will remain. If the runway is too short for your weight and weather conditions, a dynamic red <strong>OVERRUN WARNING</strong> ensures you abort the approach.</p>
             <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3795.png" alt="Landing Results Screen" class="success-img">
-        </div>
-
-        <!-- Walkthrough: Virtual Crew & Audio Briefings -->
-        <div class="setup-step">
-            <span class="step-label">Virtual Crew</span>
-            <h3>Interactive Checklists & Audio Briefings</h3>
-            <p>Elevate your simulation to a professional multi-crew environment. Simulator Station introduces a fully integrated Virtual Co-Pilot to assist you throughout every phase of your flight.</p>
-
-            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">1. Interactive Voice Checklists</strong>
-            Select your aircraft type (e.g., A320 or B737) and choose your current phase of flight (Before Start, Taxi, Line Up, Approach, etc.). The Virtual Pilot will actively read the checklist aloud and execute it with you step-by-step, perfectly mirroring real-world cockpit procedures and ensuring no critical steps are missed.</p>
-            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3784.png" alt="Interactive Checklist Screen" class="success-img" style="margin-bottom: 30px;">
-
-            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">2. Professional Audio Briefings</strong>
-            The app dynamically gathers your runway data, precise Take-Off/Landing speeds, and live weather conditions to compile a comprehensive brief. Simply tap <strong>START AUDIO</strong>, and your Virtual Co-Pilot will deliver a complete, professional, and immersive audio briefing for either your departure or arrival, exactly as you would hear on a real flight deck.</p>
-            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3785.png" alt="Audio Briefing Screen" class="success-img">
-        </div>
-
-        <!-- Walkthrough: Smart EFB -->
-        <div class="setup-step">
-            <span class="step-label">Smart EFB</span>
-            <h3>Integrated Electronic Flight Bag (iPad)</h3>
-            <p>Simulator Station comes equipped with a fully functional, built-in Electronic Flight Bag (EFB) that mirrors a real-world cockpit tablet. The EFB gives you instant access to four specialized aviation applications: Airport WX, WX Charts, NOTAMs, and a digital Scratchpad.</p>
-            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3786.png" alt="EFB Home Screen" class="success-img" style="margin-bottom: 30px;">
-
-            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">1. Aviation Weather Charts (WX Charts)</strong>
-            Generate highly detailed, real-world meteorological charts on the fly. Simply select your desired Chart Type (such as Upper Air Wind/Temp or SIGWX), choose your geographical Region, and set your specific Parameters (Forecast Time and Flight Level). Click <strong>View Weather Chart</strong> to instantly render professional aviation weather overlays for your route.</p>
-            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3787.png" alt="WX Charts Screen" class="success-img" style="margin-bottom: 30px;">
-
-            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">2. Global NOTAMs Database</strong>
-            Search for any airport ICAO code worldwide to instantly pull up its active NOTAMs. The app intelligently categorizes the data (All, Aerodrome, Nav, Obstacle) and clearly displays the effective times, expiration times, and active status. You can easily read the detailed text and even copy it directly to your clipboard for flight planning.</p>
-            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3789.png" alt="NOTAMs Screen" class="success-img" style="margin-bottom: 30px;">
-
-            <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">3. Authentic Digital Scratchpad</strong>
-            Ditch the pen and paper. The EFB includes a highly authentic digital Scratchpad featuring four dedicated, real-world templates: <strong>Takeoff</strong>, <strong>Landing</strong>, <strong>Holding</strong>, and <strong>CRAFT</strong> (Clearances). These templates are meticulously designed to mirror actual pilot notes, allowing you to seamlessly jot down and reference critical V-speeds, altitudes, and ATC clearances dynamically during your flight.</p>
-        </div>
-
-        <!-- Walkthrough: Advanced Load Manager -->
-        <div class="setup-step">
-            <span class="step-label">Aircraft Management</span>
-            <h3>Advanced Load & Fuel Manager</h3>
-            <p>Take absolute control over your aircraft's weight and balance in real-time. Use the intuitive interactive sliders to adjust the fuel quantity (0% to 100%) in your Left, Center, and Right tanks instantly.</p>
-            <p>You can also perfectly manage your payload by entering exact weights for the Co-Pilot, Rear Passenger Seats, Baggage Hold, and Extra Cargo. Perfect your performance calculations without ever opening the simulator's default menus!</p>
-            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3790.png" alt="Load and Fuel Management" class="success-img">
-        </div>
-
-        <!-- Walkthrough: Failures -->
-        <div class="setup-step">
-            <span class="step-label">Training & Emergencies</span>
-            <h3>Comprehensive Failures System</h3>
-            <p>Ready for the ultimate challenge? Simulator Station features a highly advanced, study-level failure management system designed strictly for hardcore simmers and real-world training! Trigger countless realistic emergencies categorized perfectly by aircraft systems (ENGINE, APU, HYDRAULIC, ELEC, FLT CTRL, and more).</p>
-            <p>You can force an instant catastrophic failure, like an Engine Fire or a Compressor Stall, or set a precise timer for a surprise emergency mid-flight to truly test your airmanship. Things got too intense? Simply hit the incredibly powerful <strong>FIX ALL</strong> button to instantly repair the aircraft and return all systems to a 100% healthy state! This is the ultimate tool to master emergency procedures.</p>
-            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3791.png" alt="Failures System" class="success-img">
         </div>
 
         <!-- Walkthrough: Settings -->
