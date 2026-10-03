@@ -247,6 +247,40 @@
             font-size: 1.1rem;
             line-height: 1.7;
         }
+        .whats-new-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 40px;
+        }
+        .new-card {
+            background-color: rgba(16, 25, 35, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+        .new-card:hover {
+            border-color: var(--accent);
+            background-color: var(--bg-card);
+        }
+        .new-card h4 {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .new-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin: 0;
+            line-height: 1.5;
+        }
 
         /* ==========================================
            FEATURES GRID
@@ -703,10 +737,10 @@
             </ul>
         </div>
 
-        <!-- Step 1: Download and Run Bridge -->
+        <!-- Step 1: Download Bridge -->
         <div class="setup-step">
             <span class="step-label">Step 1</span>
-            <h3>Download and Run the Bridge Server</h3>
+            <h3>Download the Bridge Files</h3>
             <p>Download the Simulator Station Bridge ZIP file to your Windows PC. This application is required to establish communication between your simulator and your device.</p>
             
             <div class="code-box" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
@@ -715,25 +749,33 @@
             </div>
             <p style="color: var(--accent); font-weight: 600; font-size: 0.85rem; margin-top: 10px;">* Copy the link above and open it in your PC browser to download the required files.</p>
             
-            <p>After downloading, extract the folder. Inside, you will find two files:</p>
+            <p>After downloading, extract the ZIP file to a convenient location on your PC. Inside the extracted folder, you will find two main folders: <strong>MSFS</strong> and <strong>X-Plane</strong>. Since you are using MSFS, open the <strong>MSFS</strong> folder.</p>
+        </div>
+
+        <!-- Step 2: Run the correct MSFS files -->
+        <div class="setup-step">
+            <span class="step-label">Step 2</span>
+            <h3>Run the Bridge Server</h3>
+            <p>Inside the <strong>MSFS</strong> folder, you will find two executable files. It is crucial to understand the function of each:</p>
+            
             <ul class="custom-list">
                 <li>
                     <strong>SimulatorStation_Bridge.v1.0.3.exe</strong> 
-                    <span>This is the primary file. <strong>You must run this file</strong> and leave the black window open in the background to control the simulator from your iPad.</span>
+                    <span>This is the primary connection file. <strong>You must run this file</strong> and leave the black window running in the background to control the simulator from your device.</span>
                 </li>
                 <li>
                     <strong>BroadcastMSFS.exe</strong> 
-                    <span>Run this file <strong>only</strong> if you are flying as a Pilot in a shared session with an Instructor. If you are flying alone or acting as an instructor, do not open this file.</span>
+                    <span>Run this file <strong>ONLY</strong> if you are flying as a Pilot in a shared session with an Instructor. If you are flying solo or acting as an instructor, do not open this file.</span>
                 </li>
             </ul>
-            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/image_7.png" alt="Extracted Bridge Files" class="success-img">
+            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/image_9.png" alt="MSFS Extracted Bridge Files" class="success-img">
         </div>
 
-        <!-- Step 2: Configure Head Tracker (OpenTrack) -->
+        <!-- Step 3: Configure Head Tracker (OpenTrack) -->
         <div class="setup-step">
-            <span class="step-label">Step 2</span>
+            <span class="step-label">Step 3</span>
             <h3>Configure Head Tracker (OpenTrack)</h3>
-            <p>To use the revolutionary Head Tracker feature, you need to install and configure OpenTrack on your PC.</p>
+            <p>To use the revolutionary Head Tracker feature, you must install and configure OpenTrack on your PC.</p>
             
             <div class="code-box" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
                 <strong id="openTrackLink" style="font-weight: normal; font-size: 0.95rem; word-break: break-all;">https://github.com/opentrack/opentrack/releases/download/opentrack-2026.1.0/opentrack-2026.1.0-win32-setup.exe</strong>
@@ -741,21 +783,21 @@
             </div>
             <p style="color: var(--accent); font-weight: 600; font-size: 0.85rem; margin-top: 10px;">* Copy the link above and open it in your PC browser to download OpenTrack.</p>
             
-            <p>Once installed, open OpenTrack and configure the main settings as follows:</p>
+            <p>Once installed, open OpenTrack and configure the main dashboard settings as follows:</p>
             <ul class="custom-list">
-                <li><strong>Input</strong> Set to <code>UDP over network</code>.</li>
+                <li><strong>Input</strong> Select <code>UDP over network</code>.</li>
                 <li><strong>Port Setting</strong> Click the hammer icon next to Input and ensure the Port is set exactly to <strong>4242</strong>.</li>
-                <li><strong>Output</strong> Set to <code>freetrack 2.0 Enhanced</code>.</li>
+                <li><strong>Output</strong> Select <code>freetrack 2.0 Enhanced</code>.</li>
             </ul>
             <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/d75b81cd-6e23-4a15-86dd-5e1b64466913.jpeg" alt="OpenTrack Main Settings" class="success-img" style="margin-bottom: 20px;">
 
-            <p>Next, click on <strong>Options</strong> at the bottom right. Match your settings exactly as shown in the image below. <strong style="color: red;">Crucial: Ensure that "Center at startup" is unchecked/disabled.</strong> Once done, click OK and then click <strong>Start</strong> to activate tracking!</p>
+            <p>Next, click on <strong>Options</strong> at the bottom right. Match your settings exactly as shown in the image below. <strong style="color: red;">Crucial: Ensure that "Center at startup" is unchecked/disabled.</strong> Once verified, click OK and then click <strong>Start</strong> to activate tracking!</p>
             <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/94cb2c7b-2515-4bc8-9ef6-4a64ac8b84ec.jpeg" alt="OpenTrack Options Settings" class="success-img">
         </div>
 
-        <!-- Step 3: Connect & Verify -->
+        <!-- Step 4: Connect & Verify -->
         <div class="setup-step">
-            <span class="step-label">Step 3</span>
+            <span class="step-label">Step 4</span>
             <h3>Connect & Verify</h3>
             <p>Open the Simulator Station app on your device. Once the app detects the bridge server running on your PC, the red "Disconnected" banner at the top of the screen will automatically turn green and display "Connected".</p>
             
@@ -860,7 +902,7 @@
             <p><strong style="color: var(--accent); display: block; margin-top: 20px; margin-bottom: 5px; font-size: 1.1rem;">5. Live Weather Data & Oceanic Reports</strong>
             Fetch highly accurate METAR, TAF, and D-ATIS reports instantly. For long-haul operations across the Atlantic or Pacific, pilots can easily log Waypoints, Times, Flight Levels, and Speeds to generate professional oceanic position reports directly through the ACARS interface.</p>
             
-            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3879.png" alt="ACARS and CPDLC Interface" class="success-img">
+            <img src="https://raw.githubusercontent.com/osamanabel1999/App-assets/refs/heads/main/IMG_3879.png" alt="ACARS and CPDLC Interface" class="success-img">
         </div>
 
         <!-- Walkthrough: Interactive Map & Global Radar -->
@@ -889,12 +931,28 @@
             <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3777.png" alt="Airport Database and Runways" class="success-img">
         </div>
 
+        <!-- Walkthrough: Remote Web FMC -->
+        <div class="setup-step">
+            <span class="step-label">Advanced Cockpit Control</span>
+            <h3>Remote Web FMC (Total Independence)</h3>
+            <p>Say goodbye to clunky simulator pop-ups and annoying multi-key bindings on your PC! Simulator Station brings you a fully functional, lightning-fast **Remote Web FMC** right on your mobile device or tablet. You can now completely program your flight routes, execute SID/STAR procedures, input performance data, and manage your entire flight computer seamlessly from your hands without ever needing to touch or look away at your simulator screen. Experience pure freedom, zero lag, and study-level cockpit interaction anywhere you sit!</p>
+            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/278459EA-135F-4E82-8194-7B9DDEFB3D5F.png" alt="Remote Web FMC Screen" class="success-img">
+        </div>
+
         <!-- Walkthrough: Flight Plan -->
         <div class="setup-step">
             <span class="step-label">Flight Plan</span>
             <h3>Live SimBrief Integration</h3>
             <p>No need to manually type your route. The app automatically fetches data from your most recent SimBrief flight plan. You get instant access to your Departure and Arrival airports, block times, cruising altitude, live METAR, TAF, and complete NOTAMs data in a clean, scrollable view.</p>
             <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3773.png" alt="Flight Plan Data" class="success-img">
+        </div>
+
+        <!-- Walkthrough: Pushback -->
+        <div class="setup-step">
+            <span class="step-label">Ground Operations</span>
+            <h3>Interactive Pushback Control</h3>
+            <p>Take complete command of ground operations without ever touching your PC. Connect the tug and use intuitive one-touch controls to push back straight, or precisely turn the tail left or right to align with the taxiway.</p>
+            <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/IMG_3775.png" alt="Pushback Control Screen" class="success-img">
         </div>
 
         <!-- Walkthrough: Performance Calculation -->
