@@ -796,9 +796,30 @@
             <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/94cb2c7b-2515-4bc8-9ef6-4a64ac8b84ec.jpeg" alt="OpenTrack Options Settings" class="success-img">
         </div>
 
-        <!-- Step 4: Connect & Verify -->
+        <!-- Step 4: ACARS Logon Code -->
         <div class="setup-step">
             <span class="step-label">Step 4</span>
+            <h3>Get Your Hoppie ACARS Logon Code</h3>
+            <p>To unlock the full potential of the ACARS & CPDLC features, you need a personal Logon Code from Hoppie's system. Follow these simple steps to generate and connect it.</p>
+            
+            <div class="code-box" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                <strong id="hoppieLinkMSFS" style="font-weight: normal; font-size: 0.95rem; word-break: break-all;">https://www.hoppie.nl/acars/system/register.html</strong>
+                <button onclick="copyAndOpenLink('hoppieLinkMSFS', this)" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">Copy & Open Link</button>
+            </div>
+            <p style="color: var(--accent); font-weight: 600; font-size: 0.85rem; margin-top: 10px;">* Click the button above to copy the link and automatically open the registration page.</p>
+            
+            <ul class="custom-list">
+                <li><strong>01 Register</strong> On the website, fill in your full name and email address. Answer the simple anti-abuse riddle (e.g., type "dog" for man's best friend), check the "I will behave" box, and click <strong>Register</strong>.</li>
+                <li><strong>02 Check Your Email</strong> You will immediately receive an email containing your unique ACARS Logon Code. Copy this code securely (check your spam folder if it doesn't arrive within seconds).</li>
+                <li><strong>03 Connect in App</strong> Open the Simulator Station app, navigate to the <strong>ACARS</strong> page, paste your code into the <strong>Logon Code</strong> field, and select your network (VAT or IVA) to establish the connection.</li>
+            </ul>
+
+            <img src="https://raw.githubusercontent.com/osamanabel1999/App-assets/refs/heads/main/IMG_3913.png" alt="ACARS Logon Code Input Field" class="success-img">
+        </div>
+
+        <!-- Step 5: Connect & Verify -->
+        <div class="setup-step">
+            <span class="step-label">Step 5</span>
             <h3>Connect & Verify</h3>
             <p>Open the Simulator Station app on your device. Once the app detects the bridge server running on your PC, the red "Disconnected" banner at the top of the screen will automatically turn green and display "Connected".</p>
             
@@ -1018,6 +1039,24 @@
                 }, 3000);
             }).catch(function(err) {
                 alert("Failed to copy the link. Please select and copy it manually.");
+            });
+        }
+        
+        // Script to copy and open link for ACARS
+        function copyAndOpenLink(elementId, buttonElement) {
+            var linkText = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(linkText).then(function() {
+                var originalText = buttonElement.innerText;
+                buttonElement.innerText = "Copied & Opening!";
+                buttonElement.style.backgroundColor = "#4CAF50"; // Green for success
+                setTimeout(function() {
+                    buttonElement.innerText = originalText;
+                    buttonElement.style.backgroundColor = "var(--accent)"; // Revert to original color
+                }, 3000);
+                window.open(linkText, '_blank');
+            }).catch(function(err) {
+                alert("Failed to copy the link. Please select and copy it manually.");
+                window.open(linkText, '_blank');
             });
         }
     </script>
