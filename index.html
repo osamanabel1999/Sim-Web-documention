@@ -873,7 +873,7 @@
             <p>Download the Simulator Station Bridge ZIP file to your Windows PC. This application is required to establish communication between your simulator and your device.</p>
             
             <div class="code-box" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
-                <strong id="bridgeLink" style="font-weight: normal; font-size: 0.95rem; word-break: break-all;">https://drive.google.com/drive/folders/1YsBM1cZVrXWPpPl8QIfHqTyHdsQTJfak?usp=sharing</strong>
+                <strong id="bridgeLink" style="font-weight: normal; font-size: 0.95rem; word-break: break-all;">https://drive.google.com/file/d/1Tt0FNCdOrwAG6mDUXwRCTEuhKbPjBMsK/view?usp=sharing</strong>
                 <button onclick="copyLink('bridgeLink', this)" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">Copy Link</button>
             </div>
             <p style="color: var(--accent); font-weight: 600; font-size: 0.85rem; margin-top: 10px;">* Copy the link above and open it in your PC browser to download the required files.</p>
@@ -889,7 +889,7 @@
             
             <ul class="custom-list">
                 <li>
-                    <strong>SimulatorStation_Bridge.v1.0.5.exe</strong> 
+                    <strong>SimulatorStation_Bridge.v1.0.6.exe</strong> 
                     <span>This is the primary connection file. <strong>You must run this file</strong> and leave the window app running in the background to control the simulator from your device.</span>
                 </li>
                 <li>
@@ -900,9 +900,45 @@
             <img src="https://github.com/osamanabel1999/App-assets/blob/main/IMG_3655.jpeg?raw=true" alt="MSFS Extracted Bridge Files" class="success-img">
         </div>
 
-        <!-- Step 3: Configure Head Tracker (OpenTrack) -->
+        <!-- Step 3: Set Up & Launch A320 Overhead Panel -->
         <div class="setup-step">
             <span class="step-label">Step 3</span>
+            <h3>Set Up &amp; Run the A320 Overhead Panel</h3>
+            <p>To enable full zero-latency control of the interactive <strong>A320 Overhead Panel</strong> inside Simulator Station, complete the quick one-time MobiFlight WASM setup below and launch the overhead panel server whenever you fly.</p>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 25px; margin-bottom: 8px; font-size: 1.1rem;">Part 1: Install MobiFlight WASM Module (First Time Only)</strong>
+            If you already have the MobiFlight WASM module (<code>mobiflight-event-module</code>) installed in your MSFS <strong>Community</strong> folder, you can skip directly to <strong>Part 2</strong>.</p>
+
+            <div class="code-box" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                <strong id="mobiFlightLink" style="font-weight: normal; font-size: 0.95rem; word-break: break-all;">https://www.mobiflight.com/en/download.html</strong>
+                <button onclick="copyLink('mobiFlightLink', this)" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">Copy Link</button>
+            </div>
+            <p style="color: var(--accent); font-weight: 600; font-size: 0.85rem; margin-top: 10px;">* Copy the link above and open it in your PC browser to download MobiFlight Connector.</p>
+
+            <ul class="custom-list">
+                <li><strong>01 Extract &amp; Install</strong> Download MobiFlight Connector from the official website above, then extract and run the installer.</li>
+                <li><strong>02 Install WASM Module</strong> Open MobiFlight Connector. It will automatically detect your simulator and install <code>mobiflight-event-module</code> into your MSFS <strong>Community</strong> folder. If a popup prompts you to install or update the WASM module, click <strong>Yes / OK</strong>.</li>
+                <li><strong>03 Close MobiFlight</strong> Once installation finishes, close MobiFlight Connector. You do <strong>not</strong> need to keep it running while flying.</li>
+            </ul>
+
+            <div class="important-note">
+                <strong>Note:</strong> If Microsoft Flight Simulator was already open while installing the MobiFlight WASM module, restart the simulator so it loads the new module properly.
+            </div>
+
+            <p><strong style="color: var(--accent); display: block; margin-top: 30px; margin-bottom: 8px; font-size: 1.1rem;">Part 2: How to Run the Overhead Panel</strong>
+            Follow these steps each time you want to use the A320 Overhead Panel with MSFS:</p>
+
+            <ul class="custom-list">
+                <li><strong>01 Load Your Flight</strong> Start Microsoft Flight Simulator and load into a flight with your aircraft.</li>
+                <li><strong>02 Open the Panel Folder</strong> Go to your <code>Simulator Station Bridge V1.0.6</code> folder and open the <code>A320 OVERHEAD PANEL</code> folder inside it.</li>
+                <li><strong>03 Launch the Panel</strong> Double-click <code>A320 OVERHEAD PANEL .exe</code> to start the overhead panel server.</li>
+                <li><strong>04 Allow Firewall Access</strong> When the Windows Firewall prompt appears, allow access and make sure <strong>Private networks</strong> is checked.</li>
+            </ul>
+        </div>
+
+        <!-- Step 4: Configure Head Tracker (OpenTrack) -->
+        <div class="setup-step">
+            <span class="step-label">Step 4</span>
             <h3>Configure Head Tracker (OpenTrack)</h3>
             <p>To use the revolutionary Head Tracker feature, you must install and configure OpenTrack on your PC.</p>
             
@@ -924,9 +960,9 @@
             <img src="https://raw.githubusercontent.com/osamanabel1999/Sim-app-Assests/refs/heads/main/94cb2c7b-2515-4bc8-9ef6-4a64ac8b84ec.jpeg" alt="OpenTrack Options Settings" class="success-img">
         </div>
 
-        <!-- Step 4: ACARS Logon Code -->
+        <!-- Step 5: ACARS Logon Code -->
         <div class="setup-step">
-            <span class="step-label">Step 4</span>
+            <span class="step-label">Step 5</span>
             <h3>Get Your Hoppie ACARS Logon Code</h3>
             <p>To unlock the full potential of the ACARS & CPDLC features, you need a personal Logon Code from Hoppie's system. Follow these simple steps to generate and connect it.</p>
             
@@ -945,9 +981,9 @@
             <img src="https://raw.githubusercontent.com/osamanabel1999/App-assets/refs/heads/main/IMG_3913.png" alt="ACARS Logon Code Input Field" class="success-img">
         </div>
 
-        <!-- Step 5: Connect & Verify -->
+        <!-- Step 6: Connect & Verify -->
         <div class="setup-step">
-            <span class="step-label">Step 5</span>
+            <span class="step-label">Step 6</span>
             <h3>Connect & Verify</h3>
             <p>Open the Simulator Station app on your device. Once the app detects the bridge server running on your PC, the red "Disconnected" banner at the top of the screen will automatically turn green and display "Connected".</p>
             
